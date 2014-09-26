@@ -1,0 +1,77 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@color/megento"
+    tools:context="com.coderchef.mywallet.SigninActivity">
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:paddingLeft="50px"
+        android:paddingTop="200px"
+        android:weightSum="1">
+
+        <ImageView
+            android:paddingLeft="100px"
+            android:layout_width="80px"
+            android:layout_height="80px"
+            android:background="@drawable/user"
+            android:id="@+id/imageView" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="80px"
+            android:id="@+id/userNam"
+            android:hint="@string/username"
+            android:layout_weight="0.80" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:paddingLeft="50px"
+        android:paddingTop="300px"
+        android:weightSum="1"
+        android:id="@+id/userPassLayout">
+
+        <ImageView
+            android:layout_width="80px"
+            android:layout_height="80px"
+            android:background="@drawable/password"
+            android:id="@+id/imageView2" />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="80px"
+            android:inputType="textPassword"
+            android:hint="@string/password"
+            android:id="@+id/userPass"
+            android:layout_weight="0.80"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:paddingLeft="375px"
+        android:paddingTop="400px"
+        android:weightSum="1">
+
+        <Button
+            android:layout_width="250px"
+            android:layout_height="wrap_content"
+            android:text="@string/login"
+            android:background="@color/blue"
+            android:id="@+id/loginBtn" />
+    </LinearLayout>
+
+</RelativeLayout>
