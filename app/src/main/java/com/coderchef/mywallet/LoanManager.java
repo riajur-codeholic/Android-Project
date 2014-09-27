@@ -4,22 +4,27 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.coderchef.mywallet.R;
+import com.coderchef.sqlite.MySQLiteHelper;
+import com.coderchef.userinfo.LoanHolderInfo;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-public class LoanManager extends Activity {
+public class LoanManager extends Activity implements View.OnClickListener {
 
     EditText name,phone,amount,address,start,end;
     Button submitBtn;
-    RadioButton give,take;
+    RadioButton give,take,selectedRadioButton;
+    RadioGroup serviceSelect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +40,8 @@ public class LoanManager extends Activity {
         submitBtn = (Button) findViewById(R.id.loanHolderButtonSubmit);
         give = (RadioButton) findViewById(R.id.radioButtonGive);
         take = (RadioButton) findViewById(R.id.radioButtonTake);
+        serviceSelect =(RadioGroup) findViewById(R.id.radioSelect);
+        submitBtn.setOnClickListener(this);
 
         Calendar c = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
@@ -60,5 +67,31 @@ public class LoanManager extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View view) {
+        if(view.getId()==R.id.submitBtn){
+            MySQLiteHelper dbHelper = new MySQLiteHelper(this);
+            String clientName,clientPhone,clientAmount,clientAddress,dateStart,dateEnd,clientStatus;
+            int selectedID;
+            long check;
+            clientName = name.getText().toString();
+            clientPhone = phone.getText().toString();
+            clientAmount = amount.getText().toString();
+            clientAddress = address.getText().toString();
+            dateStart = start.getText().toString();
+            dateEnd = end.getText().toString();
+            selectedID = serviceSelect.getCheckedRadioButtonId();
+            selectedRadioButton = (RadioButton) findViewById(selectedID);
+            clientStatus = selectedRadioButton.getText().toString();
+            check = dbHelper.insertLoanEntry(new LoanHolderInfo(clientName,clientPhone,clientAmount,clientAddress,dateStart,dateEnd,clientStatus));
+            if(check>0){
+                Toast.makeText(getApplicationContext(),"Successfully Inserted to Your List",Toast.LENGTH_LONG).show();
+            }
+            else{
+                Toast.makeText(getApplicationContext(),"Crap :(",Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }

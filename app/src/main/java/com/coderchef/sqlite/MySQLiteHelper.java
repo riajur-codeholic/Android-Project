@@ -5,7 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
+import com.coderchef.userinfo.LoanHolderInfo;
 import com.coderchef.userinfo.UserData;
 
 /**
@@ -46,6 +48,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i2) {
         db.execSQL("DROP TABLE IF EXISTS userdata_table");
+        db.execSQL("DROP TABLE IF EXISTS loan_info");
         this.onCreate(db);
     }
 
@@ -88,5 +91,19 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
     private static final String KEY_LOAN_STATUS = "loan_status";
 
     private static final String [] LOAN_COLUMNS = {KEY_NAME,KEY_PHONE,KEY_AMOUNT,KEY_ADDRESS,KEY_START_DATE,KEY_END_DATE,KEY_LOAN_STATUS};
+
+    public long insertLoanEntry(LoanHolderInfo loanHolderInfo){
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(KEY_NAME,loanHolderInfo.getName());
+        contentValues.put(KEY_PHONE,loanHolderInfo.getPhone());
+        contentValues.put(KEY_AMOUNT,loanHolderInfo.getAmount());
+        contentValues.put(KEY_ADDRESS,loanHolderInfo.getAddress());
+        contentValues.put(KEY_START_DATE,loanHolderInfo.getStart_date());
+        contentValues.put(KEY_END_DATE,loanHolderInfo.getEnd_date());
+        contentValues.put(KEY_LOAN_STATUS,loanHolderInfo.getLoan_status());
+        return db.insert(LOAN_TABLE,null,contentValues);
+    }
 
 }
